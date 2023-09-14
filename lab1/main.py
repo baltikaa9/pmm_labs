@@ -64,5 +64,5 @@ if __name__ == '__main__':
 
     graph = Graph(fig, title='Явная схема')
     T = thermal_conductivity(params)
-    graph.draw(params.x, list(np.arange(0, params.t_max + params.tau, params.tau)), T)
+    graph.draw(params.x, list(np.arange(0, params.t_max + params.tau, params.tau)), T, color='#b7ddfe')
     plt.show()

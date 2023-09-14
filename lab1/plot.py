@@ -1,6 +1,4 @@
-import matplotlib.pyplot as plt
 import numpy as np
-from mpl_toolkits.mplot3d import Axes3D
 
 
 class Graph:
@@ -10,15 +8,14 @@ class Graph:
         self.ax = fig.add_subplot(111, projection='3d')
         self.ax.set(title=title,
                     xlabel='x',
-                    ylabel='y',
-                    zlabel='z',
+                    ylabel='t',
+                    zlabel='T',
                     facecolor='ghostwhite')
 
     def draw(self, x: list, y: list, z: list, **kwargs):
         x, y = np.meshgrid(x, y)
         z = np.array(z)
         self.ax.plot_surface(x, y, z, **kwargs)
-        # self.ax.legend()
 
     def draw_scatter(self, x, y, z, **kwargs):
         self.ax.scatter(x, y, z, **kwargs)
