@@ -15,7 +15,7 @@ class Form:
     def __init__(self):
         self.fig = plt.figure(facecolor='ghostwhite')
 
-        self.style = ttk.Style()
+        # self.style = ttk.Style()
         self._init_root()
         self._create_text_boxes()
         self._create_labels()
@@ -45,7 +45,7 @@ class Form:
         self._frame2.place(relx=0.75, y=0, relwidth=0.25, relheight=0.9)
 
     def _create_text_boxes(self):
-        self.style.configure("TEntry", foreground="black", background="red")
+        # self.style.configure("TEntry", foreground="black", background="red")
         check_int = (self.root.register(lambda x: re.match(r'^(-|\d*)\d*$', x) is not None), "%P")
         check_float = (self.root.register(lambda x: re.match(r'^(-|\d*)\d*(\.|\d*)\d*$', x) is not None), "%P")
         self.textbox_a = ttk.Entry(self._frame2, background='ghostwhite', width=20, validate='key',
