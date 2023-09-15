@@ -5,13 +5,13 @@ Coords = Temperature = list[float]
 
 @dataclass
 class Parameters:
-    a: int
-    b: int
-    h: float
-    t_max: float
-    T0_expr: str
-    T_a: float
-    T_b: float
+    a: int = 0
+    b: int = 1
+    h: float = 0.02
+    t_max: float = 0.3
+    T0_expr: str = '1-x'
+    T_a: float = 0
+    T_b: float = 0
 
     def __post_init__(self):
         self.N: int = int((self.b - self.a) / self.h)
