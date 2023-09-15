@@ -3,8 +3,6 @@ import numpy as np
 
 class Graph:
     def __init__(self, fig, title: str = 'f(x)'):
-        self.fig = fig
-        # self.ax = Axes3D(self.fig)
         self.ax = fig.add_subplot(111, projection='3d')
         self.ax.set(title=title,
                     xlabel='x',
