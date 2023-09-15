@@ -1,6 +1,6 @@
 import re
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -74,6 +74,14 @@ class Form:
         self.textbox_bound_cond_a.insert(0, '0')
         self.textbox_bound_cond_b.insert(0, '0')
 
+        self.textbox_a.bind('<Return>', self.btn_click)
+        self.textbox_b.bind('<Return>', self.btn_click)
+        self.textbox_h.bind('<Return>', self.btn_click)
+        self.textbox_t_max.bind('<Return>', self.btn_click)
+        self.textbox_in_cond.bind('<Return>', self.btn_click)
+        self.textbox_bound_cond_a.bind('<Return>', self.btn_click)
+        self.textbox_bound_cond_b.bind('<Return>', self.btn_click)
+
     def _create_labels(self):
         self.label_a = tk.Label(self._frame2, text='a', background='ghostwhite')
         self.label_b = tk.Label(self._frame2, text='b', background='ghostwhite')
@@ -113,7 +121,7 @@ class Form:
 
         return Parameters(a, b, h, t_max, T0_expr, T_a, T_b)
 
-    def btn_click(self):
+    def btn_click(self, e=None):
         if params := self.get_parameters():
             self.graph.clear()
 
@@ -121,7 +129,10 @@ class Form:
             t = list(np.arange(0, params.t_max + params.tau, params.tau))
             T = thermal_conductivity(params)
             # self.graph.draw(x, t, T, color='#b7ddfe')
-            self.graph.draw(x, t, T, cmap=plt.cm.coolwarm)
+            try:
+                self.graph.draw(x, t, T, cmap=plt.cm.coolwarm)
+            except ValueError:
+                messagebox.showerror(':`(', 'Incorrect t max or h')
             self._canvas.draw()
 
     def run(self):

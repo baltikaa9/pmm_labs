@@ -16,7 +16,7 @@ def thermal_conductivity(params: Parameters):
 
         T1[0] = params.T_a
         T1[params.N + 1] = params.T_b
-        print(t // params.tau + 1, T1[1:-1])
+        # print(t // params.tau + 1, T1[1:-1])
         T.append(T1.copy())
         T0 = T1.copy()
         t += params.tau
