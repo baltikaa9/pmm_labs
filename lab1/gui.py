@@ -6,9 +6,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 
-from lab1.equation import thermal_conductivity
-from lab1.graph import Graph
-from lab1.parameters import Parameters
+from equation import thermal_conductivity_explicit
+from graph import Graph
+from parameters import Parameters
 
 
 class Form:
@@ -127,7 +127,7 @@ class Form:
 
             x = params.x
             t = list(np.arange(0, params.t_max + params.tau, params.tau))
-            T = thermal_conductivity(params)
+            T = thermal_conductivity_explicit(params)
             # self.graph.draw(x, t, T, color='#b7ddfe')
             try:
                 self.graph.draw(x, t, T, cmap=plt.cm.coolwarm)
