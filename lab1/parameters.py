@@ -20,11 +20,10 @@ class Parameters:
             self.x[i] = round(self.a + (i - 0.5) * self.h, 2)
         # НУ
         self.T0: Temperature = [round(eval(self.init_expr), 2) for x in self.x]
-        # self.T0 = [0.0 for x in self.x]
 
         # ГУ
-        self.T0[0] = self.left_bound
-        self.T0[-1] = self.right_bound
+        # self.T0[0] = self.left_bound
+        # self.T0[-1] = self.right_bound
 
         self.tau: float = self.h * self.h / (2 * self.D(-1))
         # self.tau: float = 0.001
