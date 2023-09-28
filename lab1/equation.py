@@ -6,10 +6,10 @@ from parameters import Parameters
 
 def thermal_conductivity_explicit(params: Parameters):
     T = [params.T0]
-    t = 0
+    t = params.tau
     T0 = params.T0
     T1 = [0.0 for _ in range(params.N + 2)]
-    while round(t, 4) < params.t_max:
+    while round(t, 4) <= params.t_max:
         for i in range(1, params.N + 1):
             k = (params.tau * params.D(i)) / (params.h * params.h)
             T1[i] = k * T0[i + 1] + (1 - 2 * k) * T0[i] + k * T0[i - 1]

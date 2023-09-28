@@ -6,12 +6,12 @@ from parameters import Parameters
 
 def thermal_conductivity_implicit(params: Parameters):
     T = [params.T0]
-    t = 0
+    t = params.tau
     T0 = params.T0
     N = params.N
     T1 = [0.0 for _ in range(N + 2)]
 
-    while round(t, 4) < params.t_max:
+    while round(t, 4) <= params.t_max:
         # прогоночные коэф-ты
         A = [0.0 for _ in range(N + 2)]
         B = [0.0 for _ in range(N + 2)]
