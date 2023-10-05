@@ -17,8 +17,8 @@ def wave_equation(params: Parameters):
             k = (params.tau * params.tau * params.c(i) * params.c(i)) / (params.h * params.h)
             u2[i] = k * u1[i+1] + (1 - k) * 2 * u1[i] + k * u1[i-1] - u0[i]
 
-        u2[0] = 0
-        u2[params.N + 1] = t * exp(-t)
+        u2[0] = eval(params.left_bound)
+        u2[params.N + 1] = eval(params.right_bound)
         # print(t // params.tau + 1, T1[1:-1])
         u.append(u2.copy())
         u0 = u1.copy()

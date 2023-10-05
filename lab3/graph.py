@@ -25,6 +25,7 @@ class Graph:
     def draw2d(self, x: list, y: list, **kwargs):
         self.ax2d.set_xlim(-0.1, 1.1)
         self.ax2d.set_ylim(-0.25, 0.4)
+        # self.ax2d.set_ylim(-1, 1)
         line, = self.ax2d.plot(x, y, **kwargs)
         return line
 
