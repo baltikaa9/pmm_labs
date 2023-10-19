@@ -13,8 +13,8 @@ class Parameters:
     M: int = 800
     t_max: int = 20
     # шаги
-    dx: int = 1
-    dy: int = 1
+    dx: int = 10
+    dy: int = 10
     dt: float = 0.1
     C: float = 3    # скорость ветра
     D: float = 10   # коэфф-т диффузии
