@@ -9,22 +9,22 @@ Coords = Wave = list[float]
 @dataclass
 class Parameters:
     # размерность сетки
-    N: int = 800
-    M: int = 800
-    t_max: int = 20
+    N: int = 100
+    M: int = 100
+    t_max: int = 10
     # шаги
     dx: int = 1
     dy: int = 1
-    dt: float = 0.1
+    dt: float = 0.01
     C: float = 3    # скорость ветра
     D: float = 10   # коэфф-т диффузии
     # скорости ветра по x, y
-    u = C * cos(pi / 2)
-    v = C * sin(pi / 2)
+    u = C * cos(pi / 4)
+    v = C * sin(pi / 4)
 
     def __post_init__(self):
-        self.x: Coords = [0.0 for _ in range(self.N + 2)]
-        self.y: Coords = [0.0 for _ in range(self.M + 2)]
+        self.x: Coords = [0.0 for _ in range(0, self.N + 2)]
+        self.y: Coords = [0.0 for _ in range(0, self.M + 2)]
         for i in range(self.N + 2):
             self.x[i] = i * self.dx
 
@@ -67,6 +67,11 @@ class Parameters:
             return res * p[i][j] * self.v
         else:
             return res * p[i][j - 1] * self.v
+
+    def Q(self, i: int, j: int):
+        if i == self.N // 2 and j == self.M // 2:
+            return 100
+        return 0
 
     # def D1(self, i: int, j: int) -> float:
     #     return self.D *

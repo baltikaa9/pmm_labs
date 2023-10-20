@@ -17,7 +17,7 @@ def impurities_transfer(params: Parameters):
                    (params.dM1(p, i, j) - params.dM2(p, i, j) + params.dM3(p, i, j) - params.dM4(p, i, j)) + \
                    (params.dt / (params.dx * params.dx)) * (params.D * params.C * ((p[i + 1][j] - p[i][j]) - (p[i][j] - p[i - 1][j]))) + \
                    (params.dt / (params.dy * params.dy)) * (params.D * params.C * ((p[i][j + 1] - p[i][j]) - (p[i][j] - p[i][j - 1]))) + \
-                   params.dt * Q
+                   params.dt * params.Q(i, j)
 
         for i in range(params.N + 2):
             for j in range(params.M + 2):
@@ -26,3 +26,7 @@ def impurities_transfer(params: Parameters):
         p = p1.copy()
         t += params.dt
     return p
+
+
+if __name__ == '__main__':
+    print(impurities_transfer(Parameters()))
