@@ -1,53 +1,41 @@
 import numpy as np
-from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import pyplot as plt
 
 
 class Graph:
     def __init__(self, fig, title: str = 'f(x)'):
-        self.ax3d: Axes3D = fig.add_subplot(projection='3d')
-        self.ax3d.set(title=title,
-                      xlabel='x',
-                      ylabel='t',
-                      zlabel='u',
-                      facecolor='ghostwhite')
+        self.fig = fig
 
-        self.ax2d = fig.add_subplot()
-        self.ax2d.set(title=title,
-                      xlabel='x',
-                      ylabel='u',
-                      facecolor='ghostwhite')
+        self.ax = self.fig.add_subplot()
+        self.ax.set(title=title,
+                    xlabel='x',
+                    ylabel='y',
+                    facecolor='ghostwhite')
+        self.ax.grid()
+        self.color_bar = None
 
-    def draw3d(self, x: list, y: list, z: list, **kwargs):
-        x, y = np.meshgrid(x, y)
-        z = np.array(z)
-        self.ax3d.plot_surface(x, y, z, **kwargs)
+    def contour(self, x: list, y: list, z: list[list], *args, **kwargs):
+        X, Y = np.meshgrid(x, y)
+        Z = np.zeros([len(x), len(y)])
+        for i in range(len(x)):
+            for j in range(len(y)):
+                Z[i][j] = z[i][j]
 
-    def draw2d(self, x: list, y: list, **kwargs):
-        self.ax2d.set_xlim(-0.1, 1.1)
-        self.ax2d.set_ylim(-0.25, 0.4)
-        # self.ax2d.set_ylim(-1, 1)
-        line, = self.ax2d.plot(x, y, **kwargs)
-        return line
+        plt.xticks(x)
+        plt.yticks(y)
+        C = self.ax.contour(X, Y, Z, *args, **kwargs)
+        plt.clabel(C, fontsize=10)
+        self.color_bar = self.fig.colorbar(C)
 
     def clear(self):
-        attrs3d = {
-            'title': self.ax3d.get_title(),
-            'xlabel': self.ax3d.get_xlabel(),
-            'ylabel': self.ax3d.get_ylabel(),
-            'zlabel': self.ax3d.get_zlabel(),
-            'facecolor': self.ax3d.get_facecolor()
-        }
-        self.ax3d.clear()
-        self.ax3d.set(**attrs3d)
+        if self.color_bar:
+            self.color_bar.remove()
 
-        attrs2d = {
-            'title': self.ax2d.get_title(),
-            'xlabel': self.ax2d.get_xlabel(),
-            'ylabel': self.ax2d.get_ylabel(),
-            'facecolor': self.ax2d.get_facecolor()
+        attrs = {
+            'title': self.ax.get_title(),
+            'xlabel': self.ax.get_xlabel(),
+            'ylabel': self.ax.get_ylabel(),
+            'facecolor': self.ax.get_facecolor()
         }
-        self.ax2d.clear()
-        self.ax2d.set(**attrs2d)
-
-    def draw_scatter(self, x, y, z, **kwargs):
-        self.ax3d.scatter(x, y, z, **kwargs)
+        self.ax.clear()
+        self.ax.set(**attrs)

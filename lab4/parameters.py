@@ -9,36 +9,41 @@ Coords = Wave = list[float]
 @dataclass
 class Parameters:
     # размерность сетки
-    N: int = 100
-    M: int = 100
-    t_max: int = 10
+    N: int = 840
+    M: int = 840
+    t_max: float = 10
     # шаги
-    dx: int = 1
-    dy: int = 1
+    dx: int = 120
+    dy: int = 120
     dt: float = 0.01
-    C: float = 3    # скорость ветра
+    C: float = 10    # скорость ветра
     D: float = 10   # коэфф-т диффузии
     # скорости ветра по x, y
-    u = C * cos(pi / 4)
-    v = C * sin(pi / 4)
+    C_angle: str = 'pi/4'
 
     def __post_init__(self):
-        self.x: Coords = [0.0 for _ in range(0, self.N + 2)]
-        self.y: Coords = [0.0 for _ in range(0, self.M + 2)]
-        for i in range(self.N + 2):
+        self.x: Coords = [0.0 for _ in range(self.N // self.dx + 2)]
+        self.y: Coords = [0.0 for _ in range(self.M // self.dy + 2)]
+
+        for i in range(self.N // self.dx + 2):
             self.x[i] = i * self.dx
 
-        for i in range(self.N + 2):
+        for i in range(self.M // self.dy + 2):
             self.y[i] = i * self.dy
 
         # НУ
         self.p = [[0 for _ in self.y] for _ in self.x]
 
         # ГУ
-        for i in range(self.N + 2):
-            for j in range(self.M + 2):
-                if i == 0 or j == 0 or i == self.N + 1 or j == self.M + 1:
+        for i in range(len(self.x)):
+            for j in range(len(self.y)):
+                if i == 0 or j == 0 or i == len(self.x) - 1 or j == len(self.y) - 1:
                     self.p[i][j] = 0
+
+        self.u = self.C * cos(eval(self.C_angle))
+        self.v = self.C * sin(eval(self.C_angle))
+
+        print(f'{self.C_angle}, {self.u=}, {self.v=}')
 
     def dM1(self, p: list[list[float]], i: int, j: int) -> float:
         res = self.dy * self.dt
@@ -69,8 +74,8 @@ class Parameters:
             return res * p[i][j - 1] * self.v
 
     def Q(self, i: int, j: int):
-        if i == self.N // 2 and j == self.M // 2:
-            return 100
+        if i == len(self.x) // 2 and j == len(self.y) // 2:
+            return 1
         return 0
 
     # def D1(self, i: int, j: int) -> float:
