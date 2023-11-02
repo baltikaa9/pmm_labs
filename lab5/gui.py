@@ -54,6 +54,7 @@ class Form:
                                    validatecommand=check_int)
         self.textbox_h = ttk.Entry(self._frame2, width=20, validate='key', validatecommand=check_float)
         self.textbox_t_max = ttk.Entry(self._frame2, width=20, validate='key', validatecommand=check_float)
+        self.textbox_B = ttk.Entry(self._frame2, width=20, validate='key', validatecommand=check_float)
         self.textbox_in_cond = ttk.Entry(self._frame2, width=20)
         self.textbox_bound_cond_a = ttk.Entry(self._frame2, width=20, validate='key', validatecommand=check_float)
         self.textbox_bound_cond_b = ttk.Entry(self._frame2, width=20, validate='key', validatecommand=check_float)
@@ -62,14 +63,16 @@ class Form:
         self.textbox_b.place(x=53, y=49)
         self.textbox_h.place(x=53, y=75)
         self.textbox_t_max.place(x=53, y=101)
-        self.textbox_in_cond.place(x=53, y=154)
-        self.textbox_bound_cond_a.place(x=53, y=204)
-        self.textbox_bound_cond_b.place(x=53, y=230)
+        self.textbox_B.place(x=53, y=127)
+        self.textbox_in_cond.place(x=53, y=180)
+        self.textbox_bound_cond_a.place(x=53, y=228)
+        self.textbox_bound_cond_b.place(x=53, y=256)
 
         self.textbox_a.insert(0, '0')
         self.textbox_b.insert(0, '1')
         self.textbox_h.insert(0, '0.02')
         self.textbox_t_max.insert(0, '0.3')
+        self.textbox_B.insert(0, '1')
         self.textbox_in_cond.insert(0, '1-x')
         self.textbox_bound_cond_a.insert(0, '0')
         self.textbox_bound_cond_b.insert(0, '0')
@@ -78,6 +81,7 @@ class Form:
         self.textbox_b.bind('<Return>', self.btn_click)
         self.textbox_h.bind('<Return>', self.btn_click)
         self.textbox_t_max.bind('<Return>', self.btn_click)
+        self.textbox_B.bind('<Return>', self.btn_click)
         self.textbox_in_cond.bind('<Return>', self.btn_click)
         self.textbox_bound_cond_a.bind('<Return>', self.btn_click)
         self.textbox_bound_cond_b.bind('<Return>', self.btn_click)
@@ -87,6 +91,7 @@ class Form:
         self.label_b = tk.Label(self._frame2, text='b', background='ghostwhite')
         self.label_h = tk.Label(self._frame2, text='h', background='ghostwhite')
         self.label_t_max = tk.Label(self._frame2, text='t max', background='ghostwhite')
+        self.label_B = tk.Label(self._frame2, text='B', background='ghostwhite')
         self.label_in_cond = tk.Label(self._frame2, text='НУ', background='ghostwhite')
         self.label_bound_cond_a = tk.Label(self._frame2, text='T a', background='ghostwhite')
         self.label_bound_cond_b = tk.Label(self._frame2, text='T b', background='ghostwhite')
@@ -95,13 +100,14 @@ class Form:
         self.label_b.place(x=15, y=49)
         self.label_h.place(x=15, y=75)
         self.label_t_max.place(x=15, y=101)
-        self.label_in_cond.place(x=15, y=154)
-        self.label_bound_cond_a.place(x=15, y=204)
-        self.label_bound_cond_b.place(x=15, y=230)
+        self.label_B.place(x=15, y=127)
+        self.label_in_cond.place(x=15, y=180)
+        self.label_bound_cond_a.place(x=15, y=228)
+        self.label_bound_cond_b.place(x=15, y=256)
 
     def _create_buttons(self):
         self.btn = ttk.Button(self._frame2, text='Вычислить', width=20, command=self.btn_click)
-        self.btn.place(x=51, y=260)
+        self.btn.place(x=51, y=286)
 
     def get_parameters(self) -> Parameters | None:
         try:
@@ -109,6 +115,7 @@ class Form:
             b = int(self.textbox_b.get())
             h = float(self.textbox_h.get())
             t_max = float(self.textbox_t_max.get())
+            B = float(self.textbox_B.get())
             T_a = float(self.textbox_bound_cond_a.get())
             T_b = float(self.textbox_bound_cond_b.get())
         except ValueError:
@@ -119,15 +126,16 @@ class Form:
         if b <= a:
             return
 
-        return Parameters(a, b, h, t_max, T0_expr, T_a, T_b)
+        return Parameters(a, b, h, t_max, T0_expr, T_a, T_b, B)
 
     def btn_click(self, e=None):
         if params := self.get_parameters():
             self.graph.clear()
 
-            x = params.x
+            x = params.x[1:-1]
             t = list(np.arange(0, params.t_max + params.tau, params.tau))
             T = thermal_conductivity_explicit_non_linear(params)
+            T = [_T[1:-1] for _T in T]
             # self.graph.draw(x, t, T, color='#b7ddfe')
             try:
                 self.graph.draw(x, t, T, cmap=plt.cm.coolwarm)
