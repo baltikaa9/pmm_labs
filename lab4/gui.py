@@ -52,32 +52,38 @@ class Form:
         self.textbox_d = ttk.Entry(self._frame2, width=20, validate='key', validatecommand=check_int)
         self.textbox_c_ang = ttk.Entry(self._frame2, width=20)
         self.textbox_t_max = ttk.Entry(self._frame2, width=20, validate='key', validatecommand=check_float)
+        self.textbox_q = ttk.Entry(self._frame2, width=20, validate='key', validatecommand=check_float)
 
         self.textbox_c.place(x=53, y=23)
         self.textbox_c_ang.place(x=53, y=49)
         self.textbox_d.place(x=53, y=75)
         self.textbox_t_max.place(x=53, y=101)
+        self.textbox_q.place(x=53, y=127)
 
         self.textbox_c.insert(0, '10')
         self.textbox_d.insert(0, '10')
         self.textbox_c_ang.insert(0, 'pi/4')
         self.textbox_t_max.insert(0, '10')
+        self.textbox_q.insert(0, '1')
 
         self.textbox_c.bind('<Return>', self.btn_click)
         self.textbox_d.bind('<Return>', self.btn_click)
         self.textbox_c_ang.bind('<Return>', self.btn_click)
         self.textbox_t_max.bind('<Return>', self.btn_click)
+        self.textbox_q.bind('<Return>', self.btn_click)
 
     def _create_labels(self):
         self.label_c = tk.Label(self._frame2, text='C', background='ghostwhite')
         self.label_d = tk.Label(self._frame2, text='Angle', background='ghostwhite')
         self.label_c_ang = tk.Label(self._frame2, text='D', background='ghostwhite')
         self.label_t_max = tk.Label(self._frame2, text='t max', background='ghostwhite')
+        self.label_q = tk.Label(self._frame2, text='Q', background='ghostwhite')
 
         self.label_c.place(x=15, y=23)
         self.label_d.place(x=15, y=49)
         self.label_c_ang.place(x=15, y=75)
         self.label_t_max.place(x=15, y=101)
+        self.label_q.place(x=15, y=127)
 
     def _create_buttons(self):
         self.btn = ttk.Button(self._frame2, text='Вычислить', width=20, command=self.btn_click)
@@ -89,10 +95,11 @@ class Form:
             d = int(self.textbox_d.get())
             c_angle = self.textbox_c_ang.get()
             t_max = float(self.textbox_t_max.get())
+            q = float(self.textbox_q.get())
         except ValueError:
             return
 
-        return Parameters(C=c, C_angle=c_angle, D=d, t_max=t_max)
+        return Parameters(C=c, C_angle=c_angle, D=d, t_max=t_max, q=q)
         # return Parameters()
 
     def btn_click(self, e=None):

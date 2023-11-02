@@ -13,13 +13,15 @@ class Parameters:
     M: int = 840
     t_max: float = 10
     # шаги
-    dx: int = 120
-    dy: int = 120
+    dx: int = 120 // 2
+    dy: int = 120 // 2
     dt: float = 0.01
     C: float = 10    # скорость ветра
     D: float = 10   # коэфф-т диффузии
     # скорости ветра по x, y
     C_angle: str = 'pi/4'
+    # источник в центре
+    q: float = 1
 
     def __post_init__(self):
         self.x: Coords = [0.0 for _ in range(self.N // self.dx + 2)]
@@ -75,7 +77,7 @@ class Parameters:
 
     def Q(self, i: int, j: int):
         if i == len(self.x) // 2 and j == len(self.y) // 2:
-            return 1
+            return self.q
         return 0
 
     # def D1(self, i: int, j: int) -> float:

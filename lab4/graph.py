@@ -24,7 +24,7 @@ class Graph:
         plt.xticks(x)
         plt.yticks(y)
         C = self.ax.contour(X, Y, Z, *args, **kwargs)
-        plt.clabel(C, fontsize=10)
+        plt.clabel(C, fontsize=8)
         self.color_bar = self.fig.colorbar(C)
 
     def clear(self):
