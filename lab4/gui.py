@@ -113,6 +113,7 @@ class Form:
                     print(f'{params.x[i]=}, {params.y[j]=}, {p[i][j]=}')
 
             self.graph.contour(params.x, params.y, p)
+            self.graph.draw3d(params.x, params.y, p)
             self._canvas.draw()
 
     def run(self):
