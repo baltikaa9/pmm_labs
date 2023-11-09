@@ -21,7 +21,7 @@ class Form:
         self._create_labels()
         self._create_buttons()
 
-        self.graph = Graph(self.fig, title='Перенос примесей')
+        self.graph = Graph(self.fig, title='Плотность')
 
     def _init_root(self):
         self.root = tk.Tk()
@@ -112,8 +112,7 @@ class Form:
                 for j in range(len(params.y)):
                     print(f'{params.x[i]=}, {params.y[j]=}, {p[i][j]=}')
 
-            self.graph.contour(params.x, params.y, p)
-            self.graph.draw3d(params.x, params.y, p)
+            self.graph.contour(params.x, params.y, p, extend='max', cmap='magma')
             self._canvas.draw()
 
     def run(self):
