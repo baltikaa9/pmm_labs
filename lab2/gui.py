@@ -21,7 +21,7 @@ class Form:
         self._create_labels()
         self._create_buttons()
 
-        self.graph = Graph(self.fig, title='Неявная схема')
+        self.graph = Graph(self.fig, title='Линейное - неявная схема')
 
     def _init_root(self):
         self.root = tk.Tk()
@@ -69,7 +69,7 @@ class Form:
         self.textbox_a.insert(0, '0')
         self.textbox_b.insert(0, '1')
         self.textbox_h.insert(0, '0.02')
-        self.textbox_t_max.insert(0, '0.3')
+        self.textbox_t_max.insert(0, '1')
         self.textbox_in_cond.insert(0, '1-x')
         self.textbox_bound_cond_a.insert(0, '0')
         self.textbox_bound_cond_b.insert(0, '0')
@@ -130,7 +130,7 @@ class Form:
             T = thermal_conductivity_implicit(params)
             # self.graph.draw(x, t, T, color='#b7ddfe')
             try:
-                self.graph.draw(x, t, T, cmap=plt.cm.coolwarm)
+                self.graph.draw(x, t, T, cmap=plt.cm.seismic)
             except ValueError:
                 messagebox.showerror(':`(', 'Incorrect t max or h')
             self._canvas.draw()
