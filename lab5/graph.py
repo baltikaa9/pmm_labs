@@ -19,7 +19,6 @@ class Graph:
             'title': self.ax.get_title(),
             'xlabel': self.ax.get_xlabel(),
             'ylabel': self.ax.get_ylabel(),
-            # 'zlabel': self.ax.get_zlabel(),
             'facecolor': self.ax.get_facecolor()
         }
         self.ax.clear()
