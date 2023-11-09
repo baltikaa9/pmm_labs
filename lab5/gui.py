@@ -21,7 +21,7 @@ class Form:
         self._create_labels()
         self._create_buttons()
 
-        self.graph = Graph(self.fig, title='Явная схема')
+        self.graph = Graph(self.fig, title='Нелинейное - явная схема')
 
     def _init_root(self):
         self.root = tk.Tk()
@@ -71,7 +71,7 @@ class Form:
         self.textbox_a.insert(0, '0')
         self.textbox_b.insert(0, '1')
         self.textbox_h.insert(0, '0.02')
-        self.textbox_t_max.insert(0, '0.3')
+        self.textbox_t_max.insert(0, '1')
         self.textbox_B.insert(0, '1')
         self.textbox_in_cond.insert(0, '1-x')
         self.textbox_bound_cond_a.insert(0, '0')
@@ -136,11 +136,7 @@ class Form:
             t = list(np.arange(0, params.t_max + params.tau, params.tau))
             T = thermal_conductivity_explicit_non_linear(params)
             T = [_T[1:-1] for _T in T]
-            # self.graph.draw(x, t, T, color='#b7ddfe')
-            try:
-                self.graph.draw(x, t, T, cmap=plt.cm.coolwarm)
-            except ValueError:
-                messagebox.showerror(':`(', 'Incorrect t max or h')
+            self.graph.draw(x, t, T, cmap=plt.cm.seismic)
             self._canvas.draw()
 
     def run(self):
