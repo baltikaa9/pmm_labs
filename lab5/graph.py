@@ -1,3 +1,7 @@
+import numpy as np
+from matplotlib import pyplot as plt
+
+
 class Graph:
     def __init__(self, fig, title: str = 'f(x)'):
         self.fig = fig
@@ -5,12 +9,15 @@ class Graph:
         self.ax.set(title=title,
                     xlabel='x',
                     ylabel='t',
-                    # zlabel='T',
                     facecolor='ghostwhite')
         self.color_bar = None
 
     def draw(self, x: list, y: list, z: list, **kwargs):
-        self.color_bar = self.fig.colorbar(self.ax.imshow(z[::-1], extent=(x[0], x[-1], y[0], y[-1]), **kwargs))
+        # X, Y = np.meshgrid(x, y)
+        # Z = np.array(z)
+        # C = self.ax.contourf(X, Y, Z, 60, **kwargs)
+        # self.color_bar = self.fig.colorbar(C)
+        self.color_bar = self.fig.colorbar(self.ax.imshow(z[::-1], extent=(x[0], x[-1], y[0], y[-1]), aspect='auto', **kwargs))
 
     def clear(self):
         if self.color_bar:
