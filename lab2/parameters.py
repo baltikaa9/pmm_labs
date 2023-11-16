@@ -25,6 +25,9 @@ class Parameters:
         # self.T0[0] = self.left_bound
         # self.T0[-1] = self.right_bound
 
+        self.T0[0] = self.T0[1] - self.h * self.left_bound  # олеся 2 рода
+        self.T0[-1] = self.right_bound  # олеся 1 рода
+
         self.tau: float = self.h * self.h / (2 * self.D(-1))
         # self.tau: float = 0.001
 

@@ -17,13 +17,14 @@ def thermal_conductivity_implicit(params: Parameters):
         B = [0.0 for _ in range(N + 2)]
 
         A[0] = 1
-        B[0] = -params.h * params.left_bound
+        B[0] = -params.h * params.left_bound    # олеся 2 рода
         for i in range(1, N + 2):
             k = params.tau * params.D(i)
             A[i] = k / (params.h * params.h + k * (2 - A[i-1]))
             B[i] = (params.h * params.h * T0[i-1] + k * B[i-1]) / (params.h * params.h + k * (2 - A[i-1]))
 
-        T1[N+1] = (params.h * params.right_bound + B[N+1]) / (1 - A[N+1])
+        # T1[N+1] = (params.h * params.right_bound + B[N+1]) / (1 - A[N+1])
+        T1[N+1] = params.right_bound    # олеся 1 рода
         for i in range(N, -1, -1):
             T1[i] = A[i+1] * T1[i+1] + B[i+1]
 

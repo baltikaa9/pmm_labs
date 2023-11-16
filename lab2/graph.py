@@ -9,7 +9,7 @@ class Graph:
         self.color_bar = None
 
     def draw(self, x: list, y: list, z: list, **kwargs):
-        self.color_bar = self.fig.colorbar(self.ax.imshow(z[::-1], extent=(x[0], x[-1], y[0], y[-1]), **kwargs))
+        self.color_bar = self.fig.colorbar(self.ax.imshow(z[::-1], extent=(x[0], x[-1], y[0], y[-1]), aspect='auto', **kwargs))
 
     def clear(self):
         if self.color_bar:

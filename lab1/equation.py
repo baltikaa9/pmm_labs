@@ -14,8 +14,8 @@ def thermal_conductivity_explicit(params: Parameters):
             k = (params.tau * params.D(i)) / (params.h * params.h)
             T1[i] = k * T0[i + 1] + (1 - 2 * k) * T0[i] + k * T0[i - 1]
 
-        T1[0] = T1[1] - params.h * params.left_bound
-        T1[params.N + 1] = T1[params.N] + params.h * params.right_bound
+        T1[0] = T1[1] - params.h * params.left_bound  # олеся 2 рода
+        T1[-1] = params.right_bound  # олеся 1 рода
         # print(t // params.tau + 1, T1[1:-1])
         T.append(T1.copy())
         T0 = T1.copy()
