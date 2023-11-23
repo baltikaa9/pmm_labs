@@ -126,13 +126,16 @@ class Form:
             self.graph.clear()
 
             x = params.x
-            t = list(np.arange(0, params.t_max + params.tau, params.tau))
+            # t = list(np.arange(0, params.t_max + params.tau, params.tau))
             T = thermal_conductivity_implicit(params)
             # self.graph.draw(x, t, T, color='#b7ddfe')
-            try:
-                self.graph.draw(x, t, T, cmap=plt.cm.seismic)
-            except ValueError:
-                messagebox.showerror(':`(', 'Incorrect t max or h')
+            iter_count = 500
+            with plt.ion():
+                line = self.graph.draw(x, T[0], color='black')
+                for i in range(1, len(T), len(T) // iter_count):
+                    # self.graph.clear()
+                    line.set_ydata(T[i])
+                    plt.gcf().canvas.flush_events()
             self._canvas.draw()
 
     def run(self):

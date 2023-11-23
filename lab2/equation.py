@@ -28,7 +28,7 @@ def thermal_conductivity_implicit(params: Parameters):
         for i in range(N, -1, -1):
             T1[i] = A[i+1] * T1[i+1] + B[i+1]
 
-        # T1[0] = T1[1] - params.h * params.left_bound
+        T1[0] = T1[1] - params.h * params.left_bound
         # T1[params.N + 1] = T1[params.N] + params.h * params.right_bound
         T.append(T1.copy())
         T0 = T1.copy()
