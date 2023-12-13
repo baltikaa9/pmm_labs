@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 
-from equation import thermal_conductivity_explicit_non_linear
+from equation import thermal_conductivity_implicit_non_linear
 from graph import Graph
 from parameters import Parameters
 
@@ -22,12 +22,12 @@ class Form:
         self._create_labels()
         self._create_buttons()
 
-        self.graph = Graph(self.fig, title='Нелинейное - явная схема')
+        self.graph = Graph(self.fig, title='Нелинейное - неявная схема')
         self.stop_anim = False
 
     def _init_root(self):
         self.root = tk.Tk()
-        self.root.wm_title('Нелинейное уравнение теплопроводности - явная схема')
+        self.root.wm_title('Нелинейное уравнение теплопроводности - неявная схема')
         self.root.geometry('816x489')
         self.root.config(background='ghostwhite')
 
@@ -48,7 +48,6 @@ class Form:
         self._frame2.place(relx=0.75, y=0, relwidth=0.25, relheight=0.9)
 
     def _create_text_boxes(self):
-        # self.style.configure("TEntry", foreground="black", background="red")
         check_int = (self.root.register(lambda x: re.match(r'^(-|\d*)\d*$', x) is not None), "%P")
         check_float = (self.root.register(lambda x: re.match(r'^(-|\d*)\d*(\.|\d*)\d*$', x) is not None), "%P")
         self.textbox_a = ttk.Entry(self._frame2, background='ghostwhite', width=20, validate='key',
@@ -142,13 +141,13 @@ class Form:
             self.graph.clear()
 
             x = params.x
-            T = thermal_conductivity_explicit_non_linear(params)
+            T = thermal_conductivity_implicit_non_linear(params)
             # T = [_T[1:-1] for _T in T]
             # self.graph.draw(x, T, cmap=plt.cm.seismic)
-            iter_count = 100
+            # iter_count = 10
             with plt.ion():
                 line = self.graph.draw(x, T[0], color='black')
-                for i in range(1, len(T), len(T) // iter_count):
+                for i in range(1, len(T)):
                     if self.stop_anim:
                         self.swap_stop_anim()
                         break

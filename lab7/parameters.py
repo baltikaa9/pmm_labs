@@ -24,12 +24,12 @@ class Parameters:
 
         # ГУ
         self.T0[0] = self.T0[1] - self.h * self.left_bound
-        self.T0[-1] = self.T0[-2] + self.h * self.right_bound
-        # self.T0[-1] = self.right_bound
+        # self.T0[-1] = self.T0[self.N] + self.h * self.right_bound
+        self.T0[-1] = self.right_bound
 
         D = [self.D(i, self.T0[i]) for i in range(len(self.x))]
-        self.tau: float = self.h * self.h / (6 * max(D))
-        # self.tau: float = 0.0001
+        # self.tau: float = self.h * self.h / (6 * max(D))
+        self.tau: float = 0.1
         c=1
 
     def D(self, i: int, T: float) -> int:
